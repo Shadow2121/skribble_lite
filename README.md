@@ -1,2 +1,3 @@
 # skribble_lite
-you can not play with your friend now. But I will try to make it.
+
+It is like paint you can drow any thing in it, There are some different colore you can choose and there is also some different pencil sizes.
