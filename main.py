@@ -5,6 +5,11 @@ win = pygame.display.set_mode((1000, 700))
 pygame.display.set_caption("PAINT")
 
 
+
+def save_img():
+    pygame.image.save(empty_surface, "img.png")
+
+
 def all_color():
     gg = False
     gb = False
@@ -64,6 +69,9 @@ def all_color():
 
 
 def DrowMainWin():   
+
+    win.blit(empty_surface, (0, 0))
+
     ## main selection bar
     pygame.draw.rect(win, (255, 255, 255), (10, 620, 980, 70))
     ## clear button
@@ -103,23 +111,28 @@ def DrowMainWin():
 
 
 
+
 def paint(r,g,b,re):
     d = True
     while d:
         x, y = pygame.mouse.get_pos()
         if x in range(10, 980) and y in range(10, 600):
         # pygame.draw.rect(win, (r,g,b), (x, y, 10, 10))
-            pygame.draw.circle(win, (r,g,b), (x,y), re)
+            pygame.draw.circle(empty_surface, (r,g,b), (x,y), re)
         for e in pygame.event.get():
             if e.type == pygame.QUIT:
                 d = False
             if e.type == pygame.MOUSEBUTTONUP:
                 d = False
                 break
+        win.blit(empty_surface, (0, 0))
         pygame.display.update()
 
 ## drawing the main canvas
-pygame.draw.rect(win, (255, 255, 255), (10, 10, 980, 600))
+size = width, height = (1000, 620)
+empty_surface = pygame.Surface(size)
+canvas = pygame.draw.rect(empty_surface, (255, 255, 255), (10, 10, 980, 600))
+
 #### GAME LOOP ######## 
 run = True
 r,g,b,re = 255,0,0,9
@@ -129,6 +142,9 @@ while run:
     for e in pygame.event.get():
         if e.type == pygame.QUIT:
             run = False
+        if e.type == pygame.KEYDOWN:
+            if e.key == pygame.K_s:
+                save_img()
         if e.type == pygame.MOUSEBUTTONDOWN:
             x, y = pygame.mouse.get_pos()
             if x in range(10, 980) and y in range(10, 600):
