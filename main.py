@@ -5,6 +5,63 @@ win = pygame.display.set_mode((1000, 700))
 pygame.display.set_caption("PAINT")
 
 
+def all_color():
+    gg = False
+    gb = False
+    gr = False
+    for i in range(45):
+        r,g,b = 0,0,0
+        for j in range(385):
+            if i < 15:
+                r += 2
+                if r >= 255:
+                    r = 255
+                    gg = True
+                if gg:
+                    g += 2
+                    if g >= 255:
+                        g = 255
+                        gb = True
+                    gg = False
+                if gb:
+                    b += 2
+                    if b >= 255:
+                        b = 255   
+                    gb = False
+            elif i in range(15, 30):
+                g += 2
+                if g >= 255:
+                    g = 255
+                    gb = True
+                if gb:
+                    b += 2
+                    if b >= 255:
+                        b = 255
+                        gr = True
+                    gb = False
+                if gr:
+                    r += 2
+                    if r >= 255:
+                        r = 255   
+                    gr = False
+            else:
+                b += 2
+                if b >= 255:
+                    b = 255
+                    gr = True
+                if gr:
+                    r += 2
+                    if r >= 255:
+                        r = 255
+                        gg = True
+                    gr = False
+                if gg:
+                    g += 2
+                    if g >= 255:
+                        g = 255   
+                    gg = False
+            win.set_at((j + 20, i + 632), (r,g,b))
+
 
 def DrowMainWin():   
     ## main selection bar
@@ -25,19 +82,24 @@ def DrowMainWin():
     pygame.draw.circle(win, (0,0,0), (655, 655), 3)
 
     ## color mate main win
-    pygame.draw.rect(win, (0, 255, 255), (20, 630, 125, 50))
+    pygame.draw.rect(win, (0, 0, 0), (18, 630, 389, 49))
 
     ## 10 colors
-    pygame.draw.rect(win, (0, 0, 0), (20, 630, 25, 25))
-    pygame.draw.rect(win, (255, 0, 0), (45, 630, 25, 25))
-    pygame.draw.rect(win, (0, 255, 0), (70, 630, 25, 25))
-    pygame.draw.rect(win, (0, 0, 255), (95, 630, 25, 25))
-    pygame.draw.rect(win, (255,255,0), (120, 630, 25, 25))
-    pygame.draw.rect(win, (255,255,255), (20, 655, 25, 25))
-    pygame.draw.rect(win, (255, 0, 255), (45, 655, 25, 25))
-    pygame.draw.rect(win, (0, 255, 255), (70, 655, 25, 25))
-    pygame.draw.rect(win, (128,128,128), (95, 655, 25, 25))
-    pygame.draw.rect(win, (127, 0, 255), (120, 655, 25, 25))
+    # pygame.draw.rect(win, (0, 0, 0), (20, 630, 25, 25))
+    # pygame.draw.rect(win, (255, 0, 0), (45, 630, 25, 25))
+    # pygame.draw.rect(win, (0, 255, 0), (70, 630, 25, 25))
+    # pygame.draw.rect(win, (0, 0, 255), (95, 630, 25, 25))
+    # pygame.draw.rect(win, (255,255,0), (120, 630, 25, 25))
+    # pygame.draw.rect(win, (255,255,255), (20, 655, 25, 25))
+    # pygame.draw.rect(win, (255, 0, 255), (45, 655, 25, 25))
+    # pygame.draw.rect(win, (0, 255, 255), (70, 655, 25, 25))
+    # pygame.draw.rect(win, (128,128,128), (95, 655, 25, 25))
+    # pygame.draw.rect(win, (127, 0, 255), (120, 655, 25, 25))
+
+    # This will add almost all colors 
+    all_color()
+
+    pygame.draw.rect(win, (r, g, b), (420, 630, 50, 50))
 
 
 
@@ -73,26 +135,29 @@ while run:
                 paint(r,g,b,re)
             if x in range(930, 980) and y in range(630, 680):
                 pygame.draw.rect(win, (255, 255, 255), (10, 10, 980, 600))
-            elif x in range(20, 45) and y in range(630, 655):
-                r,g,b = 0,0,0
-            elif x in range(45, 70) and y in range(630, 655):
-                r,g,b = 255, 0, 0
-            elif x in range(70, 95) and y in range(630, 655):
-                r,g,b = 0, 255,0
-            elif x in range(95, 120) and y in range(630, 655):
-                r,g,b = 0,0,255
-            elif x in range(120, 145) and y in range(630, 655):
-                r,g,b = 255,255,0
-            elif x in range(20, 45) and y in range(655, 680):
-                r,g,b = 255,255,255
-            elif x in range(45, 70) and y in range(655, 680):
-                r,g,b = 255,0,255
-            elif x in range(70, 95) and y in range(655, 680):
-                r,g,b = 0,255,255
-            elif x in range(95, 120) and y in range(655, 680):
-                r,g,b = 128,128,128
-            elif x in range(120, 145) and y in range(655, 680):
-                r,g,b = 127,0,255
+            elif x in range(20, 405) and y in range(630, 675):
+                temp_color = win.get_at((x, y))
+                r,g,b = temp_color[0], temp_color[1], temp_color[2]
+            # elif x in range(20, 45) and y in range(630, 655):
+            #     r,g,b = 0,0,0
+            # elif x in range(45, 70) and y in range(630, 655):
+            #     r,g,b = 255, 0, 0
+            # elif x in range(70, 95) and y in range(630, 655):
+            #     r,g,b = 0, 255,0
+            # elif x in range(95, 120) and y in range(630, 655):
+            #     r,g,b = 0,0,255
+            # elif x in range(120, 145) and y in range(630, 655):
+            #     r,g,b = 255,255,0
+            # elif x in range(20, 45) and y in range(655, 680):
+            #     r,g,b = 255,255,255
+            # elif x in range(45, 70) and y in range(655, 680):
+            #     r,g,b = 255,0,255
+            # elif x in range(70, 95) and y in range(655, 680):
+            #     r,g,b = 0,255,255
+            # elif x in range(95, 120) and y in range(655, 680):
+            #     r,g,b = 128,128,128
+            # elif x in range(120, 145) and y in range(655, 680):
+            #     r,g,b = 127,0,255
             elif x in range(630, 680) and y in range(630, 680):
                 re = 3
             elif x in range(690, 740) and y in range(630, 680):
